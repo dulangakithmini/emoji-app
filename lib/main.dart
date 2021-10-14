@@ -1,4 +1,4 @@
-import 'package:emoji_app/screens/persistent_counter_screen.dart';
+import 'package:emoji_app/screens/names_fetcher_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Emoji App'),
         ),
-        body: PersistentCounterScreen(),
+        body: NamesFetcherScreen(),
       ),
     );
   }
