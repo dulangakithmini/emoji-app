@@ -28,13 +28,13 @@ class _NamesFetcherScreenState extends State<NamesFetcherScreen> {
             )
           : UserList(users),
       floatingActionButton: FloatingActionButton(
-        onPressed: _fetchUser,
+        onPressed: _onFetch,
         child: Text('Fetch'),
       ),
     );
   }
 
-  void _fetchUser() async {
+  void _onFetch() async {
     var response =
         await get(Uri.parse('http://jsonplaceholder.typicode.com/users'));
     List<dynamic> usersList = json.decode(response.body);
