@@ -28,14 +28,15 @@ class _NamesFetcherScreenState extends State<NamesFetcherScreen> {
   }
 
   void _fetchUser() async {
-    counter++;
-
-    var response = await get(
-        Uri.parse('http://jsonplaceholder.typicode.com/users/$counter'));
-    var userModel = UserModel.fromJson(json.decode(response.body));
+    var response =
+        await get(Uri.parse('http://jsonplaceholder.typicode.com/users'));
+    List<dynamic> usersList = json.decode(response.body);
 
     setState(() {
-      users.add(userModel);
+      for (var item = 0; item < usersList.length; item++) {
+        var userModel = UserModel.fromJson(usersList[item]);
+        users.add(userModel);
+      }
     });
   }
 }

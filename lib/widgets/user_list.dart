@@ -26,6 +26,9 @@ class UserList extends StatelessWidget {
           color: Colors.tealAccent),
       child: Text(
         users[index].name,
+        style: TextStyle(
+          fontSize: 20,
+        ),
         textAlign: TextAlign.center,
       ),
     );
