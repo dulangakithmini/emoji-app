@@ -10,7 +10,7 @@ class PersistentCounterScreen extends StatefulWidget {
 }
 
 class _PersistentCounterScreenState extends State<PersistentCounterScreen> {
-  int number;
+  int _number;
 
   @override
   Widget build(BuildContext context) {
@@ -19,46 +19,34 @@ class _PersistentCounterScreenState extends State<PersistentCounterScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _decreaseNumber(),
-            Text('${number ?? '0'}'),
-            _increaseNumber(),
+            ElevatedButton(
+              onPressed: _onDecrement,
+              child: Text('Decrease value'),
+            ),
+            Text('${_number ?? '0'}'),
+            ElevatedButton(
+              onPressed: _onIncrement,
+              child: Text('Increase value'),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _decreaseNumber() {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _decrement();
-        });
-      },
-      child: Text('Decrease value'),
-    );
-  }
-
-  Widget _increaseNumber() {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _increment();
-        });
-      },
-      child: Text('Increase value'),
-    );
-  }
-
-  _increment() async {
+  _onIncrement() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    number = (prefs.getInt('number') ?? 0) + 1;
-    await prefs.setInt('number', number);
+    setState(() {
+      _number = (prefs.getInt('number') ?? 0) + 1;
+    });
+    await prefs.setInt('number', _number);
   }
 
-  _decrement() async {
+  _onDecrement() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    number = (prefs.getInt('number') ?? 0) - 1;
-    await prefs.setInt('number', number);
+    setState(() {
+      _number = (prefs.getInt('number') ?? 0) - 1;
+    });
+    await prefs.setInt('number', _number);
   }
 }
