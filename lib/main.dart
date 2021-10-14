@@ -1,5 +1,5 @@
-import 'package:emoji_app/screens/print_time.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
+          appBar: AppBar(
         title: Text('Emoji App'),
       ),
-      body: PrintTime(),
+      body: MyNumber(),
     ));
   }
 }
@@ -28,7 +28,7 @@ class MyNumber extends StatefulWidget {
 }
 
 class _MyNumberState extends State<MyNumber> {
-  int number = 0;
+  int number;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _MyNumberState extends State<MyNumber> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _decreaseNumber(),
-          Text('$number'),
+          Text('${number ?? '0'}'),
           _increaseNumber(),
         ],
       ),
@@ -48,7 +48,7 @@ class _MyNumberState extends State<MyNumber> {
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          number--;
+          _decrement();
         });
       },
       child: Text('Decrease value'),
@@ -59,10 +59,22 @@ class _MyNumberState extends State<MyNumber> {
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          number++;
+          _increment();
         });
       },
       child: Text('Increase value'),
     );
+  }
+
+  _increment() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    number = (prefs.getInt('number') ?? 0) + 1;
+    await prefs.setInt('number', number);
+  }
+
+  _decrement() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    number = (prefs.getInt('number') ?? 0) - 1;
+    await prefs.setInt('number', number);
   }
 }
