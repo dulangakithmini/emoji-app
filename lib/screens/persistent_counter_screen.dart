@@ -12,6 +12,15 @@ class PersistentCounterScreen extends StatefulWidget {
 class _PersistentCounterScreenState extends State<PersistentCounterScreen> {
   int _number;
 
+  void initState() {
+    _getNumber().then((number) {
+      setState(() {
+        _number = number;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,5 +57,10 @@ class _PersistentCounterScreenState extends State<PersistentCounterScreen> {
       _number = (prefs.getInt('number') ?? 0) - 1;
     });
     await prefs.setInt('number', _number);
+  }
+
+  Future<int> _getNumber() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('number');
   }
 }
