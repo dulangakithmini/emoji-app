@@ -1,34 +1,26 @@
 import 'package:flutter/material.dart';
 
 class PostWidget extends StatelessWidget {
+  final String name;
   final Color colour;
+  final Color postColour;
 
-  PostWidget({
-    this.colour,
-  });
+  PostWidget({@required this.name, this.colour, this.postColour});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 70,
-      color: colour,
-      margin: EdgeInsets.only(left: 5.0, right: 5.0),
-    );
-  }
-
-  Column buildPost() {
     return Column(
       children: [
         Container(
           child: Row(
             children: [
-              Container(height: 25, width: 25, color: Colors.brown),
+              Container(height: 25, width: 25, color: colour),
               SizedBox(
                 width: 5,
               ),
               Column(
                 children: [
-                  Text('Dulanga Kithmini'),
+                  Text(name),
                   Text(DateTime.now().toString().split('.')[0]),
                 ],
               ),
@@ -45,7 +37,7 @@ class PostWidget extends StatelessWidget {
             children: [
               Text('Hi Nipuna... 😍 😘 '),
               SizedBox(height: 20),
-              Container(height: 105, width: 75, color: Colors.blueGrey),
+              Container(height: 105, width: 75, color: postColour),
             ],
           ),
         ),

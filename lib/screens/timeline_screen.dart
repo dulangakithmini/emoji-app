@@ -1,4 +1,5 @@
 import 'package:emoji_app/widgets/post_widget.dart';
+import 'package:emoji_app/widgets/story_widget.dart';
 import 'package:flutter/material.dart';
 
 class TimelineScreen extends StatelessWidget {
@@ -85,17 +86,17 @@ class TimelineScreen extends StatelessWidget {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    PostWidget(colour: Colors.greenAccent),
-                    PostWidget(colour: Colors.deepOrangeAccent),
-                    PostWidget(colour: Colors.lightBlue),
-                    PostWidget(colour: Colors.yellow),
-                    PostWidget(colour: Colors.pinkAccent),
-                    PostWidget(colour: Colors.redAccent),
-                    PostWidget(colour: Colors.indigo),
-                    PostWidget(colour: Colors.purpleAccent),
-                    PostWidget(colour: Colors.black),
-                    PostWidget(colour: Colors.lightGreen),
-                    PostWidget(colour: Colors.lightBlueAccent),
+                    StoryWidget(colour: Colors.greenAccent),
+                    StoryWidget(colour: Colors.deepOrangeAccent),
+                    StoryWidget(colour: Colors.lightBlue),
+                    StoryWidget(colour: Colors.yellow),
+                    StoryWidget(colour: Colors.pinkAccent),
+                    StoryWidget(colour: Colors.redAccent),
+                    StoryWidget(colour: Colors.indigo),
+                    StoryWidget(colour: Colors.purpleAccent),
+                    StoryWidget(colour: Colors.black),
+                    StoryWidget(colour: Colors.lightGreen),
+                    StoryWidget(colour: Colors.lightBlueAccent),
                   ],
                 ),
               ),
@@ -103,11 +104,20 @@ class TimelineScreen extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    PostWidget().buildPost(),
+                    PostWidget(
+                        colour: Colors.brown,
+                        name: 'Dulanga Kithmini',
+                        postColour: Colors.teal),
                     SizedBox(height: 15),
-                    PostWidget().buildPost(),
+                    PostWidget(
+                        colour: Colors.pinkAccent,
+                        name: 'Nipuna Sudharaka',
+                        postColour: Colors.blueGrey),
                     SizedBox(height: 15),
-                    PostWidget().buildPost(),
+                    PostWidget(
+                        colour: Colors.yellowAccent,
+                        name: 'Phi Ball',
+                        postColour: Colors.lightGreenAccent),
                   ],
                 ),
               ),
