@@ -1,4 +1,4 @@
-import 'package:emoji_app/screens/names_fetcher_screen.dart';
+import 'package:emoji_app/screens/timeline_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Emoji App'),
-        ),
-        body: NamesFetcherScreen(),
+        // appBar: AppBar(
+        //   title: Text('Emoji App'),
+        // ),
+        body: TimelineScreen(),
       ),
     );
   }
