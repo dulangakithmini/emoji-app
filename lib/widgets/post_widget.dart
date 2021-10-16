@@ -41,6 +41,21 @@ class PostWidget extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              children: [Icon(Icons.thumb_up_off_alt), Text('Like')],
+            ),
+            Row(
+              children: [Icon(Icons.chat_bubble_outline), Text('Comment')],
+            ),
+            Row(
+              children: [Icon(Icons.share), Text('Share')],
+            ),
+          ],
+        ),
       ],
     );
   }
