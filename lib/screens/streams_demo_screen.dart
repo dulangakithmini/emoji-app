@@ -56,7 +56,9 @@ class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
             StreamBuilder<String>(
                 stream: _responseStream,
                 builder: (context, snapshot) {
-                  return Text('${snapshot.data}');
+                  return snapshot.data != null
+                      ? Text('${snapshot.data}')
+                      : Text('');
                 }),
             ElevatedButton(
                 onPressed: () {
