@@ -9,6 +9,9 @@ class StreamsDemoScreen extends StatefulWidget {
 }
 
 class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
+  String expression;
+  String value;
+
   final BehaviorSubject<String> _expressionSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _numberSubject = BehaviorSubject<String>();
   Stream<String> _responseStream;
@@ -34,39 +37,33 @@ class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
         padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
-            StreamBuilder<String>(
-                stream: _expressionSubject,
-                builder: (context, snapshot) {
-                  return TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Expression',
-                    ),
-                    onChanged: (String expression) {
-                      _expressionSubject.add(expression);
-                    },
-                  );
-                }),
-            StreamBuilder<Object>(
-                stream: _numberSubject,
-                builder: (context, snapshot) {
-                  return TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Value',
-                    ),
-                    onChanged: (String number) {
-                      _numberSubject.add(number);
-                    },
-                  );
-                }),
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Expression',
+              ),
+              onChanged: (String value) {
+                expression = value;
+              },
+            ),
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Value',
+              ),
+              onChanged: (String number) {
+                value = number;
+              },
+            ),
             StreamBuilder<String>(
                 stream: _responseStream,
                 builder: (context, snapshot) {
-                  return ElevatedButton(
-                      onPressed: () {
-                        Text('${snapshot.data}');
-                      },
-                      child: Text('Submit'));
+                  return Text('${snapshot.data}');
                 }),
+            ElevatedButton(
+                onPressed: () {
+                  _expressionSubject.add(expression);
+                  _numberSubject.add(value);
+                },
+                child: Text('Submit')),
           ],
         ),
       ),
