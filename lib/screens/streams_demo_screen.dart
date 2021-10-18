@@ -9,9 +9,6 @@ class StreamsDemoScreen extends StatefulWidget {
 }
 
 class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
-  String expression;
-  String value;
-
   final BehaviorSubject<String> _expressionSubject = BehaviorSubject<String>();
   final BehaviorSubject<String> _numberSubject = BehaviorSubject<String>();
   Stream<String> _responseStream;
@@ -42,7 +39,7 @@ class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
                 labelText: 'Expression',
               ),
               onChanged: (String value) {
-                expression = value;
+                _expressionSubject.add(value);
               },
             ),
             TextField(
@@ -50,7 +47,7 @@ class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
                 labelText: 'Value',
               ),
               onChanged: (String number) {
-                value = number;
+                _numberSubject.add(number);
               },
             ),
             StreamBuilder<String>(
@@ -60,12 +57,6 @@ class _StreamsDemoScreenState extends State<StreamsDemoScreen> {
                       ? Text('${snapshot.data}')
                       : Text('');
                 }),
-            ElevatedButton(
-                onPressed: () {
-                  _expressionSubject.add(expression);
-                  _numberSubject.add(value);
-                },
-                child: Text('Submit')),
           ],
         ),
       ),
