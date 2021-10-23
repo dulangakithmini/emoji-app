@@ -1,4 +1,4 @@
-import 'package:emoji_app/screens/streams_demo_screen.dart';
+import 'package:emoji_app/screens/todo_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Emoji App'),
         ),
-        body: StreamsDemoScreen(),
+        body: TodoScreen(),
       ),
     );
   }
