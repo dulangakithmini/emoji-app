@@ -20,6 +20,10 @@ class _TodoScreenState extends State<TodoScreen> {
     _todoSubject.listen((value) {
       _counterSubject.add(value.length);
     });
+
+    _todoSubject.listen((value) {
+      showSnackBar(value);
+    });
     super.initState();
   }
 
@@ -126,5 +130,13 @@ class _TodoScreenState extends State<TodoScreen> {
     _todoList = _todoSubject.value;
     _todoList.remove(todo);
     _todoSubject.add(_todoList);
+  }
+
+  void showSnackBar(value) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Todo created - ${value.last}'),
+      ),
+    );
   }
 }
