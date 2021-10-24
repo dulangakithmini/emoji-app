@@ -1,3 +1,4 @@
+import 'package:emoji_app/mixins/after_layout_mixin.dart';
 import 'package:flutter/material.dart';
 
 class OtherScreen extends StatefulWidget {
@@ -9,15 +10,20 @@ class OtherScreen extends StatefulWidget {
   _OtherScreenState createState() => _OtherScreenState();
 }
 
-class _OtherScreenState extends State<OtherScreen> {
+class _OtherScreenState extends State<OtherScreen> with AfterLayoutMixin {
   final TextEditingController _controller = TextEditingController();
 
   @override
-  void initState() {
-    WidgetsBinding.instance.endOfFrame.then((value) =>
-        _controller.text = ModalRoute.of(context).settings.arguments as String);
-    super.initState();
+  void afterFirstLayout(BuildContext context) {
+    _controller.text = ModalRoute.of(context).settings.arguments as String;
   }
+
+  // @override
+  // void initState() {
+  //   WidgetsBinding.instance.endOfFrame.then((value) =>
+  //       _controller.text = ModalRoute.of(context).settings.arguments as String);
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
