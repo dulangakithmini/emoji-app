@@ -1,4 +1,5 @@
-import 'package:emoji_app/screens/provider_demo_screen.dart';
+import 'package:emoji_app/screens/home_screen.dart';
+import 'package:emoji_app/screens/other_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,12 +12,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Emoji App'),
-        ),
-        body: ProviderDemoScreen(),
-      ),
+      // home: Scaffold(
+      //   appBar: AppBar(
+      //     title: Text('Emoji App'),
+      //   ),
+      // ),
+      routes: {
+        HomeScreen.route: (context) => HomeScreen(),
+        OtherScreen.route: (context) => OtherScreen()
+      },
     );
   }
 }
