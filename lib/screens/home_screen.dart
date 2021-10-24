@@ -1,17 +1,12 @@
+import 'package:emoji_app/resources/app_data.dart';
 import 'package:emoji_app/screens/other_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static String route = '/';
 
   const HomeScreen({Key key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  String currentMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Text('$currentMessage'),
+            Text('${context.watch<AppData>()}'),
             ElevatedButton(
                 onPressed: () => onGoToOther(context),
                 child: Text('Go to other screen')),
@@ -34,11 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onGoToOther(BuildContext context) async {
-    final userInput = await Navigator.pushNamed(context, OtherScreen.route,
-        arguments: currentMessage);
+    final userInput = await Navigator.pushNamed(context, OtherScreen.route);
     if (userInput == null) return;
-    setState(() {
-      currentMessage = userInput;
-    });
   }
 }

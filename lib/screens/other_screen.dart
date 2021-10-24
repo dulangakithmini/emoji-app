@@ -1,5 +1,7 @@
 import 'package:emoji_app/mixins/after_layout_mixin.dart';
+import 'package:emoji_app/resources/app_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OtherScreen extends StatefulWidget {
   static String route = '/other';
@@ -15,7 +17,7 @@ class _OtherScreenState extends State<OtherScreen> with AfterLayoutMixin {
 
   @override
   void afterFirstLayout(BuildContext context) {
-    _controller.text = ModalRoute.of(context).settings.arguments as String;
+    _controller.text = context.read<AppData>().textInput;
   }
 
   // @override
@@ -47,6 +49,7 @@ class _OtherScreenState extends State<OtherScreen> with AfterLayoutMixin {
   }
 
   onSubmit(BuildContext context) {
-    Navigator.pop(context, _controller.text);
+    context.read<AppData>().setTextInput(_controller.text);
+    Navigator.pop(context);
   }
 }
