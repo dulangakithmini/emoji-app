@@ -1,3 +1,4 @@
+import 'package:emoji_app/mixins/after_layout_mixin.dart';
 import 'package:emoji_app/screens/todo_screen.dart';
 import 'package:emoji_app/services/todo_service.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,14 @@ class TodoEditorScreen extends StatefulWidget {
   _TodoEditorScreenState createState() => _TodoEditorScreenState();
 }
 
-class _TodoEditorScreenState extends State<TodoEditorScreen> {
+class _TodoEditorScreenState extends State<TodoEditorScreen>
+    with AfterLayoutMixin {
   final TextEditingController _controller = TextEditingController();
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    _controller.text = context.read<TodoService>().todo;
+  }
 
   @override
   Widget build(BuildContext context) {

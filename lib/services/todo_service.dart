@@ -3,8 +3,11 @@ import 'package:rxdart/rxdart.dart';
 
 class TodoService extends ChangeNotifier {
   List<String> _todoList = [];
+  String _todo;
 
   int get todoCount => _counterSubject.valueOrNull;
+
+  String get todo => _todo;
 
   List<String> get todos => _todoSubject.valueOrNull;
 
@@ -39,6 +42,11 @@ class TodoService extends ChangeNotifier {
     _todoList = _todoSubject.value;
     _todoList.remove(todo);
     _todoSubject.add(_todoList);
+    notifyListeners();
+  }
+
+  void editTodo(String todo) {
+    _todo = todo;
     notifyListeners();
   }
 
