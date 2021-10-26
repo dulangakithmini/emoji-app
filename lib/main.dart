@@ -1,6 +1,6 @@
-import 'package:emoji_app/resources/app_data.dart';
-import 'package:emoji_app/screens/home_screen.dart';
-import 'package:emoji_app/screens/other_screen.dart';
+import 'package:emoji_app/screens/todo_editor_screen.dart';
+import 'package:emoji_app/screens/todo_screen.dart';
+import 'package:emoji_app/services/todo_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => AppData(),
+      create: (_) => TodoService(),
       child: MaterialApp(
         routes: {
-          HomeScreen.route: (context) => HomeScreen(),
-          OtherScreen.route: (context) => OtherScreen()
+          TodoScreen.route: (context) => TodoScreen(),
+          TodoEditorScreen.route: (context) => TodoEditorScreen()
         },
       ),
     );

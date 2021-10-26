@@ -1,101 +1,51 @@
+import 'package:emoji_app/screens/todo_editor_screen.dart';
+import 'package:emoji_app/services/todo_service.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:provider/provider.dart';
 
-class TodoScreen extends StatefulWidget {
+class TodoScreen extends StatelessWidget {
+  static String route = '/';
+
   const TodoScreen({Key key}) : super(key: key);
-
-  @override
-  _TodoScreenState createState() => _TodoScreenState();
-}
-
-class _TodoScreenState extends State<TodoScreen> {
-  final BehaviorSubject<List<String>> _todoSubject =
-      BehaviorSubject<List<String>>();
-  final TextEditingController _controller = TextEditingController();
-  List<String> _todoList = [];
-  final BehaviorSubject<int> _counterSubject = BehaviorSubject<int>();
-
-  @override
-  void initState() {
-    _todoSubject.listen((value) {
-      _counterSubject.add(value.length);
-    });
-
-    _todoSubject.listen((value) {
-      showSnackBar(value);
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _todoSubject.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Todo App'),
+      ),
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
-            TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                labelText: 'Enter Todo',
+            Center(
+                child: ElevatedButton(
+                    onPressed: () => onAdd(context), child: Text('Add Todo'))),
+            SizedBox(height: 15),
+            Text(
+              context.watch<TodoService>().todoCount == null
+                  ? 'No Todos added'
+                  : '${context.watch<TodoService>().todoCount} Todos',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            ElevatedButton(
-              onPressed: onSubmit,
-              child: Text('Submit'),
-            ),
-            SizedBox(height: 15),
-            StreamBuilder<int>(
-                stream: _counterSubject,
-                builder: (context, snapshot) {
-                  return snapshot.data != null
-                      ? Text(
-                          '${snapshot.data} Todos',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      : Text('');
-                }),
-            StreamBuilder<List<String>>(
-                stream: _todoSubject,
-                builder: (context, snapshot) {
-                  return snapshot.data != null
-                      ? Expanded(
-                          child: ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, int index) {
-                              return buildTodoList(snapshot.data, index);
-                            },
-                          ),
-                        )
-                      : Text('');
-                }),
+            context.watch<TodoService>().todos != null
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: context.watch<TodoService>().todos.length,
+                      itemBuilder: (context, int index) {
+                        return buildTodoList(
+                            context.watch<TodoService>().todos, index);
+                      },
+                    ),
+                  )
+                : Text(''),
           ],
         ),
       ),
     );
-  }
-
-  void onSubmit() {
-    String _todo = _controller.text;
-    _controller.clear();
-    List<String> _currentTodos = _todoSubject.valueOrNull;
-    if (_currentTodos == null) {
-      _todoList.add(_todo);
-      _todoSubject.add(_todoList);
-    } else {
-      _todoList = _currentTodos;
-      _todoList.add(_todo);
-      _todoSubject.add(_todoList);
-    }
   }
 
   Widget buildTodoList(List<String> todos, int index) {
@@ -115,28 +65,24 @@ class _TodoScreenState extends State<TodoScreen> {
             style: TextStyle(fontSize: 20),
             textAlign: TextAlign.center,
           ),
-          IconButton(
-              onPressed: () {
-                onClose(todos[index]);
-              },
-              icon: Icon(Icons.close),
-              color: Colors.red)
+          Builder(builder: (context) {
+            return IconButton(
+                onPressed: () {
+                  onClose(context, todos[index]);
+                },
+                icon: Icon(Icons.close),
+                color: Colors.red);
+          })
         ],
       ),
     );
   }
 
-  void onClose(String todo) {
-    _todoList = _todoSubject.value;
-    _todoList.remove(todo);
-    _todoSubject.add(_todoList);
+  void onClose(BuildContext context, String todo) {
+    context.read<TodoService>().deleteTodo(todo);
   }
 
-  void showSnackBar(value) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Todo created - ${value.last}'),
-      ),
-    );
+  void onAdd(BuildContext context) {
+    Navigator.pushNamed(context, TodoEditorScreen.route);
   }
 }
